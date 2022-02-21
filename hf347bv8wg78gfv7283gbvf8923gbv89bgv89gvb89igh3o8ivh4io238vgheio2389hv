@@ -1489,8 +1489,6 @@ end)
 
 local Section = Tab:NewSection("Dupe")
 
-DupeInventory=AxeModifications:Section:NewToggle("Dupe Inventory", "Dupe Inventory", false,function(toggle)GUISettings.DupeInventory=toggle;if toggle then if not Ancestor:DupeInventory()then  task.wait(.3)DupeInventory:Toggle()end;end;end,false,true,'Duplicates Your Inventory.');
-
 Section:NewLabel("Donate Dupe")
 Section:NewLabel("Please select the base number you want to donate")
 Section:NewLabel("PLEASE MAKE SURE TO LOAD INFRONT OF LAND")
