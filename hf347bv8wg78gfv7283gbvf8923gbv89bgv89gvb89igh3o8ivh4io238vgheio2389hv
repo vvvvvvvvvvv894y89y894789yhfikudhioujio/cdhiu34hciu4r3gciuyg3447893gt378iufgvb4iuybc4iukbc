@@ -2055,7 +2055,7 @@ Section:NewSlider("Lengh Of Item", "Lengh Of Item", 50, 1, function(CA)
 	lengh = CA	
 end)
 
-Section:NewButton("Start Box Sort", "Start Box Sort", function()
+Section:NewButton("Start Box Sort (Press 1 time and wait after 30s if nothing happend try again keep doing this.)", "Start Box Sort", function()
 function MakePart(Pos, Size)
             local Part = Instance.new("Part", workspace)
             Part.Anchored = true
