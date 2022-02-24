@@ -1,0 +1,2298 @@
+--S409 Hub
+
+
+
+----------------//funtion//-------------------
+loadstring([[
+function Stacker()
+function MakePart(Pos, Size)
+    local Part = Instance.new("Part", workspace)
+    Part.Anchored = true
+    Part.Size = Size
+    Part.Position = Pos + game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+    Part.Color = Color3.fromRGB(Pos.X, Pos.Y, Pos.Z)
+    Part.CanCollide = false
+end
+
+local Player = game.Players.LocalPlayer
+local XSort, ZSort = lengh, height
+
+function SortItems(ItemName)
+    local AllItems = {}
+    for i,v in pairs(workspace.PlayerModels:GetChildren()) do
+        if v:FindFirstChild("Owner") and v:FindFirstChild("PurchasedBoxItemName") then
+            if v.Owner.Value == Player and v.PurchasedBoxItemName.Value == ItemName then
+                table.insert(AllItems, v)
+            end
+        end
+    end
+    
+    local PartSize = AllItems[1].Main.Size
+    local Numbers = 0
+    local Me = game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(0,3.5,0)
+    
+    wait(3)
+    
+    for Y = 1, math.ceil(#AllItems / (XSort * ZSort)) do
+        for X = 1, XSort do
+            for Z = 1, ZSort do
+                if Numbers < #AllItems then
+                    Numbers = Numbers + 1
+                    Args = {nil, CFrame.new(X * PartSize.X, Y * PartSize.Y, Z * PartSize.Z) + Me, Player, nil, AllItems[Numbers], true}
+                    game:GetService("ReplicatedStorage").PlaceStructure.ClientPlacedStructure:FireServer(unpack(Args))
+                else
+                    print("fix k thx")
+                    break
+                end
+            end
+        end
+    end
+end
+SortItems(stackitem)
+end
+]])();
+
+----------------//stuff//---------------------
+loadstring([[
+    local mt = getrawmetatable(game);
+    local old = mt.__namecall;
+    local protect = newcclosure or protect_function
+    setreadonly(mt, false);
+    mt.__namecall = protect(function(self, ...)
+        local method = getnamecallmethod();
+        local argss = {...};
+        if method == "Kick" then
+            wait(9e9);
+            return;
+        end;
+        return old(self, unpack(argss));
+    end);
+    hookfunction(game.Players.LocalPlayer.Kick,protect(function() wait(9e9) end));    
+]])();
+----------------//stuff//---------------------
+loadstring([[
+function Walkspeed(new)
+    _G.WS = new;
+	local Humanoid = game:GetService("Players").LocalPlayer.Character.Humanoid;
+	Humanoid:GetPropertyChangedSignal("WalkSpeed"):Connect(function()
+		Humanoid.WalkSpeed = _G.WS;
+	end)
+	Humanoid.WalkSpeed = _G.WS;
+end
+]])();
+----------------//stuff//---------------------
+loadstring([[
+function Jumppower(new)
+	_G.JP = new;
+	local Humanoid = game:GetService("Players").LocalPlayer.Character.Humanoid;
+	Humanoid:GetPropertyChangedSignal("JumpPower"):Connect(function()
+		Humanoid.JumpPower = _G.JP
+	end)
+	Humanoid.JumpPower = _G.JP
+end
+]])();
+----------------//funtion//-------------------
+loadstring([[
+function Alwaysday()
+	game.Lighting.TimeOfDay = "12:00:00"
+	game.Lighting.Brightness = 1
+	_G.d = t;
+end
+]])();
+----------------//funtion//-------------------
+loadstring([[
+function AlwaysNight()
+game.Lighting.TimeOfDay = "24:00:00"
+	game.Lighting.Brightness = 0
+	_G.n = t;
+end
+]])();
+----------------//funtion//-------------------
+loadstring([[
+function ClearFog()
+    state = (state) == true 
+    while state do
+    game: service"RunService".RenderStepped:wait()
+    game.Lighting.FogEnd = 9999
+    end
+end
+]])();
+----------------//funtion//-------------------
+loadstring([[
+function SpookMode()
+game.Lighting.Spook.Value = state
+end
+]])();
+----------------//funtion//-------------------
+loadstring([[
+function RemoveLava()
+    for i,v in pairs(game.Workspace.Region_Volcano:GetDescendants()) do
+        if v.Name == "TouchInterest" then
+          v:Destroy()
+        elseif v.Name == "Lava" then
+          for i,c in pairs(v:GetChildren()) do
+            if c:IsA("Part") then
+              if state == true then
+                c.Transparency = 1
+              else    
+                c.Transparency = 0
+              end
+            end
+          end
+        end
+      end
+end
+]])();
+----------------//funtion//-------------------
+loadstring([[
+function Boulders()
+    local destroy = true
+    local boulders = workspace.Region_Volcano:FindFirstChild("PartSpawner")
+    while destroy == true do
+    for i, v in pairs(boulders:GetChildren()) do
+     v:Destroy()
+            end
+            wait(2)
+        end 
+end
+]])();
+----------------//funtion//-------------------
+loadstring([[
+function Shopitems()
+    for i,v in pairs(game.Workspace.Stores:GetChildren()) do
+        if v.Name == "ShopItems" then
+        spawn(function()
+        for a,b in pairs(v:GetChildren()) do 
+        game.ReplicatedStorage.Interaction.ClientIsDragging:FireServer(b)
+        game.ReplicatedStorage.Interaction.DestroyStructure:FireServer(b)
+        end
+        end)
+        end
+        end
+end
+]])();
+----------------//funtion//-------------------
+loadstring([[
+function ClaimShopitems()
+    for i,v in pairs(game.Workspace.Properties:GetChildren()) do
+        if v:FindFirstChild("Owner") and v.Owner.Value == game.Players.LocalPlayer then
+        spawn(function()
+        for a,b in pairs(v:GetChildren()) do 
+        game.ReplicatedStorage.Interaction.ClientIsDragging:FireServer(b)
+        game.ReplicatedStorage.Interaction.ClientRequestOwnership:FireServer(b)     
+        end
+        end)
+        end  
+        end
+end
+]])();
+--------------//ss//------------------------
+loadstring([[
+function Temp()
+	for _,f in pairs(game.ReplicatedStorage.Purchasables.Structures.BlueprintStructures:GetChildren()) do
+		local CloneBP = f:Clone()
+		CloneBP.Parent = game.Players.LocalPlayer.PlayerBlueprints.Blueprints
+	end
+end
+]])();
+----------------//funtion//-------------------
+loadstring([[
+function box()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1668.42932, 349.601929, 1476.00793)
+wait(5)
+for i,v in pairs(game.Workspace.Properties:GetChildren()) do
+if v.Owner.Value == game.Players.LocalPlayer then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.OriginSquare.CFrame
+end
+end
+end
+]])();
+----------------//funtion//-------------------
+loadstring([[
+function ClaimAllPlots()
+    for i, v in pairs(game.Workspace.Properties:GetChildren()) do
+        if v:FindFirstChild("Owner") and v.Owner.Value == nil then
+            game.ReplicatedStorage.Interaction.ClientIsDragging:FireServer(v)
+        end
+    end
+end
+]])();
+----------------//funtion//-------------------
+game.Lighting.Changed:connect(function()
+	if _G.d then
+		game.Lighting.TimeOfDay = "12:00:00"
+		game.Lighting.Brightness = 1
+	end
+	if _G.n then
+		game.Lighting.TimeOfDay = "24:00:00"
+		game.Lighting.Brightness = 0
+	end
+	if _G.rf then
+		game.Lighting.FogEnd = 9999
+	end
+	end)
+----------------//funtion//-------------------
+loadstring([[
+function FreeLand()
+    for a,b in pairs(workspace.Properties:GetChildren()) do 
+        if b:FindFirstChild("Owner") and b:FindFirstChild("OriginSquare") and b.Owner.Value == nil then 
+       wait(1)
+       game.ReplicatedStorage.PropertyPurchasing.ClientPurchasedProperty:FireServer(b, b.OriginSquare.OriginCFrame.Value.p + Vector3.new(0,3,0))
+      for i,v in pairs(game.Workspace.Properties:GetChildren()) do
+       if v.Owner.Value == game.Players.LocalPlayer then
+      wait(0.1)
+       game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.OriginSquare.CFrame + Vector3.new(0,10,0)
+      wait(0.1)
+       game.Players.LocalPlayer.Character.Jump = false
+      break
+      end
+      end
+      end
+      end
+      end
+]])();
+----------------//funtion//-------------------
+local itemCount = 0
+function tpItem(item, pos)
+	if itemCount == 200 then
+		wait(2)
+		itemCount = 0
+	end
+	local res = game:GetService("ReplicatedStorage").PlaceStructure.ClientPlacedStructure:FireServer(nil, pos, player, nil, item, true)
+	itemCount = itemCount + 1
+end
+----------------//function//------------------
+loadstring([[
+function toggleNoClip()
+	local disableCollide
+	disableCollide = game:GetService("RunService").Stepped:connect(function()
+		for i, v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+			if noclipping == false then
+				disableCollide:Disconnect()
+				return
+			end
+			if v:IsA("BasePart") then
+				v.CanCollide = false
+			end
+		end
+	end)
+end
+]])();
+----------------//function//------------------
+loadstring([[
+function Maxland()
+for i, v in pairs(game:GetService("Workspace").Properties:GetChildren()) do
+		if v:FindFirstChild("Owner") and v.Owner.Value == game.Players.LocalPlayer then
+			base = v
+			square = v.OriginSquare
+		end
+	end
+	function Expandbase(pos)
+		local Event = game:GetService("ReplicatedStorage").PropertyPurchasing.ClientExpandedProperty
+		Event:FireServer(base, pos)
+	end
+	spos = square.Position
+	Expandbase(CFrame.new(spos.X + 40, spos.Y, spos.Z))
+	Expandbase(CFrame.new(spos.X - 40, spos.Y, spos.Z))
+	Expandbase(CFrame.new(spos.X, spos.Y, spos.Z + 40))
+	Expandbase(CFrame.new(spos.X, spos.Y, spos.Z - 40))
+	Expandbase(CFrame.new(spos.X + 40, spos.Y, spos.Z + 40))
+	Expandbase(CFrame.new(spos.X + 40, spos.Y, spos.Z - 40))
+	Expandbase(CFrame.new(spos.X - 40, spos.Y, spos.Z + 40))
+	Expandbase(CFrame.new(spos.X - 40, spos.Y, spos.Z - 40))
+	Expandbase(CFrame.new(spos.X + 80, spos.Y, spos.Z))
+	Expandbase(CFrame.new(spos.X - 80, spos.Y, spos.Z))
+	Expandbase(CFrame.new(spos.X, spos.Y, spos.Z + 80))
+	Expandbase(CFrame.new(spos.X, spos.Y, spos.Z - 80))
+	Expandbase(CFrame.new(spos.X + 80, spos.Y, spos.Z + 80))
+	Expandbase(CFrame.new(spos.X + 80, spos.Y, spos.Z - 80))
+	Expandbase(CFrame.new(spos.X - 80, spos.Y, spos.Z + 80))
+	Expandbase(CFrame.new(spos.X - 80, spos.Y, spos.Z - 80))
+	Expandbase(CFrame.new(spos.X + 40, spos.Y, spos.Z + 80))
+	Expandbase(CFrame.new(spos.X - 40, spos.Y, spos.Z + 80))
+	Expandbase(CFrame.new(spos.X + 80, spos.Y, spos.Z + 40))
+	Expandbase(CFrame.new(spos.X + 80, spos.Y, spos.Z - 40))
+	Expandbase(CFrame.new(spos.X - 80, spos.Y, spos.Z + 40))
+	Expandbase(CFrame.new(spos.X - 80, spos.Y, spos.Z - 40))
+	Expandbase(CFrame.new(spos.X + 40, spos.Y, spos.Z - 80))
+	Expandbase(CFrame.new(spos.X - 40, spos.Y, spos.Z - 80)) 
+end
+]])();
+----------------//function//------------------
+loadstring([[
+function Tool()
+local TypeName = "Tool"
+for i,v in pairs(game:GetService("Workspace").PlayerModels:GetChildren()) do
+    if v:FindFirstChild("Type") and tostring(v.Type.Value) == TypeName then
+   
+    local Plr = game:GetService("Players").LocalPlayer
+    local Mouse = Plr:GetMouse()
+
+    local selection = Instance.new("SelectionBox")
+    selection.Color3 = Color3.new(95,95,95)
+    selection.Parent = v.Type.Parent
+    selection.Adornee = selection.Parent
+    else 
+end
+end
+end
+]])();
+----------------//function//------------------
+loadstring([[
+function Gift()
+local TypeName = "Gifts"
+
+for i,v in pairs(game:GetService("Workspace").PlayerModels:GetChildren()) do
+    if v:FindFirstChild("Type") and tostring(v.Type.Value) == TypeName then
+   
+    local Plr = game:GetService("Players").LocalPlayer
+    local Mouse = Plr:GetMouse()
+
+    local selection = Instance.new("SelectionBox")
+    selection.Color3 = Color3.new(95,95,95)
+    selection.Parent = v.Type.Parent
+    selection.Adornee = selection.Parent
+    else 
+end
+end
+end
+]])();
+----------------//function//------------------
+loadstring([[
+function Loose()
+local TypeName = "Loose items"
+
+for i,v in pairs(game:GetService("Workspace").PlayerModels:GetChildren()) do
+    if v:FindFirstChild("Type") and tostring(v.Type.Value) == TypeName then
+   
+    local Plr = game:GetService("Players").LocalPlayer
+    local Mouse = Plr:GetMouse()
+
+    local selection = Instance.new("SelectionBox")
+    selection.Color3 = Color3.new(95,95,95)
+    selection.Parent = v.Type.Parent
+    selection.Adornee = selection.Parent
+    else 
+end
+end
+end
+]])();
+----------------//function//------------------
+loadstring([[
+function TakeWood()
+    local UserInputService = game:GetService("UserInputService")
+    local Mouse = game:GetService("Players").LocalPlayer:GetMouse()
+    local Folder = Instance.new("Folder", game:GetService("Workspace"))
+    local Part = Instance.new("Part", Folder)
+    local Attachment1 = Instance.new("Attachment", Part)
+    Part.Anchored = true
+    Part.CanCollide = false
+    Part.Transparency = 1
+    local Updated = Mouse.Hit + Vector3.new(0, 5, 0)
+    local NetworkAccess = coroutine.create(function()
+        settings().Physics.AllowSleep = false
+        while game:GetService("RunService").RenderStepped:Wait() do
+            for _, Players in next, game:GetService("Players"):GetPlayers() do
+                if Players ~= game:GetService("Players").LocalPlayer then
+                    Players.MaximumSimulationRadius = 0 
+                    sethiddenproperty(Players, "SimulationRadius", 0) 
+                end 
+            end
+            game:GetService("Players").LocalPlayer.MaximumSimulationRadius = math.pow(math.huge,math.huge)
+            setsimulationradius(math.huge) 
+        end 
+    end) 
+    coroutine.resume(NetworkAccess)
+    local function ForcePart(v)
+        if v:IsA("Part") and v.Anchored == false and v.Parent:FindFirstChild("Humanoid") == nil and v.Parent:FindFirstChild("Head") == nil and v.Name ~= "Handle" then
+            Mouse.TargetFilter = v
+            for _, x in next, v:GetChildren() do
+                if x:IsA("BodyAngularVelocity") or x:IsA("BodyForce") or x:IsA("BodyGyro") or x:IsA("BodyPosition") or x:IsA("BodyThrust") or x:IsA("BodyVelocity") or x:IsA("RocketPropulsion") then
+                    x:Destroy()
+                end
+            end
+            if v:FindFirstChild("Attachment") then
+                v:FindFirstChild("Attachment"):Destroy()
+            end
+            if v:FindFirstChild("AlignPosition") then
+                v:FindFirstChild("AlignPosition"):Destroy()
+            end
+            if v:FindFirstChild("Torque") then
+                v:FindFirstChild("Torque"):Destroy()
+            end
+            v.CanCollide = false
+            local Torque = Instance.new("Torque", v)
+            Torque.Torque = Vector3.new(100000, 100000, 100000)
+            local AlignPosition = Instance.new("AlignPosition", v)
+            local Attachment2 = Instance.new("Attachment", v)
+            Torque.Attachment0 = Attachment2
+            AlignPosition.MaxForce = 9999999999999999
+            AlignPosition.MaxVelocity = math.huge
+            AlignPosition.Responsiveness = 200
+            AlignPosition.Attachment0 = Attachment2 
+            AlignPosition.Attachment1 = Attachment1
+        end
+    end
+    for _, v in next, game:GetService("Workspace"):GetDescendants() do
+        ForcePart(v)
+    end
+    game:GetService("Workspace").DescendantAdded:Connect(function(v)
+        ForcePart(v)
+    end)
+    UserInputService.InputBegan:Connect(function(Key, Chat)
+        if Key.KeyCode == Enum.KeyCode.p and not Chat then
+           Updated = Mouse.Hit + Vector3.new(0, 5, 0)
+        end
+    end)
+    
+    spawn(function()
+        while game:GetService("RunService").RenderStepped:Wait() do
+            Attachment1.WorldCFrame = Updated
+        end
+    end)
+end
+]])();
+----------------//funtion//-------------------
+loadstring([[
+function RemoveTress()
+	for s,d in pairs (game.Workspace:GetChildren()) do
+        if d.Name == "TreeRegion" then
+        d:Destroy()
+        else 
+        print("No Trees Found")
+    end
+    end
+end
+]])();
+----------------//funtion//-------------------
+loadstring([[
+function DropAxes()
+    for a,b in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+    if b.Name == "Tool" and b.ClassName == "Tool" then
+      game.ReplicatedStorage.Interaction.ClientInteracted:FireServer(b, "Drop tool", game.Players.LocalPlayer.Character.Head.CFrame)
+    end
+    end
+    end
+    ]])();
+----------------//funtion//-------------------
+loadstring([[
+function PickAxes()
+    if #game.Players.LocalPlayer.Backpack:GetChildren() < 9 then
+        game:GetService("ReplicatedStorage").Interaction.ClientInteracted:FireServer(b,"Pick up tool")
+        wait(0.2)
+        if LP.Character:FindFirstChild("Tool") then
+          LP.Character.Tool.Parent = game.Players.LocalPlayer.Backpack
+        end
+    end
+end
+]])();
+----------------//funtion//-------------------
+loadstring([[
+function MaxlandDupe()
+Maxland()
+game.ReplicatedStorage.Interaction.ClientSetListPlayer:InvokeServer(game:GetService"Players".LocalPlayer.WhitelistFolder, game.Players.LocalPlayer, true)
+Maxland()
+Maxland()
+local LoadSlot = game.ReplicatedStorage.LoadSaveRequests.ClientMayLoad:InvokeServer(Player)
+if LoadSlot then
+game.ReplicatedStorage.LoadSaveRequests.RequestLoad:InvokeServer(game.Players.LocalPlayer.CurrentSaveSlot.Value, Player)
+game.ReplicatedStorage.Interaction.ClientSetListPlayer:InvokeServer(game:GetService"Players".LocalPlayer.WhitelistFolder, game.Players.LocalPlayer, false)
+game:GetService("Players").LocalPlayer.PlayerGui.Chat.Frame.Visible = false
+repeat
+wait(0.1)
+until game:GetService("Players").LocalPlayer.PlayerGui.PropertyPurchasingGUI.SelectPurchase.Visible == true
+wait(.2)
+Manager:SendKeyEvent(true,"E",false,game)
+repeat
+wait(0.1)
+until game:GetService("Players").LocalPlayer.PlayerGui.PropertyPurchasingGUI.ConfirmPurchase.Visible == true
+wait(1.2)
+Manager:SendKeyEvent(true,"E",false,game)
+wait(2.5)
+end
+end
+]])();
+----------------//funtion//-------------------
+function SelfDupe()
+game.ReplicatedStorage.Interaction.ClientSetListPlayer:InvokeServer(game:GetService"Players".LocalPlayer.WhitelistFolder, game.Players.LocalPlayer, true)
+local LoadSlot = game.ReplicatedStorage.LoadSaveRequests.ClientMayLoad:InvokeServer(Player)
+if LoadSlot then
+game.ReplicatedStorage.LoadSaveRequests.RequestLoad:InvokeServer(game.Players.LocalPlayer.CurrentSaveSlot.Value, Player)
+game.ReplicatedStorage.Interaction.ClientSetListPlayer:InvokeServer(game:GetService"Players".LocalPlayer.WhitelistFolder, game.Players.LocalPlayer, false)
+game:GetService("Players").LocalPlayer.PlayerGui.Chat.Frame.Visible = false
+repeat
+wait(0.1)
+until game:GetService("Players").LocalPlayer.PlayerGui.PropertyPurchasingGUI.SelectPurchase.Visible == true
+wait(.2)
+Manager:SendKeyEvent(true,"E",false,game)
+repeat
+wait(0.1)
+until game:GetService("Players").LocalPlayer.PlayerGui.PropertyPurchasingGUI.ConfirmPurchase.Visible == true
+wait(1.2)
+Manager:SendKeyEvent(true,"E",false,game)
+wait(2.5)
+end
+end
+----------------//funtion//-------------------
+loadstring([[
+function Selllogs()
+    for _, Log in pairs(workspace.LogModels:GetChildren()) do
+        if Log.Name:sub(1, 6) == "Loose_" and Log:findFirstChild("Owner") then
+            if Log.Owner.Value == game.Players.LocalPlayer then
+                for i,v in pairs(Log:GetChildren()) do
+                    if v.Name=="WoodSection" then
+                        spawn(function()
+                            for i=1,10 do
+                                wait()
+                                v.CFrame=CFrame.new(Vector3.new(315, -0.296, 85.791))*CFrame.Angles(math.rad(90),0,0)
+                            end
+                        end)
+                    end
+                end
+                spawn(function()
+                    for i=1,20 do
+                        wait()
+                        game.ReplicatedStorage.Interaction.ClientIsDragging:FireServer(Log)
+                    end
+                end)
+            end
+        end
+    print("sold logs")
+	end 
+end
+]])();
+----------------//Extra//-------------------
+
+loadstring([[
+function leakeditems(value)
+    if value == true then
+        game.ReplicatedStorage.Purchasables:Clone().Parent = game.Workspace.PlayerModels
+        end
+        if value == false then 
+        game.ReplicatedStorage.Purchasables:Clone().Parent = game.Workspace.PlayerModels:Destroy()
+        end
+        end
+    ]])();
+
+----------------//Lighting//-------------------
+
+----------------//funtion//-------------------
+
+
+
+----------------//funtion//-------------------
+loadstring([[
+function SellSold()
+    for i,v in pairs(workspace.PlayerModels:GetDescendants()) do 
+        if v:FindFirstChild("Owner") and v.Owner.Value == game.Players.LocalPlayer and v:FindFirstChild("ItemName") and v.ItemName.Value == "PropertySoldSign" then
+            print(v.Owner.Value)
+        if v.Main then
+       game.ReplicatedStorage.Interaction.ClientRequestOwnership:FireServer(v.Main)
+      v.Main.CFrame = CFrame.new(316.222229, -0.56983912, 79.0911713, 0.999756873, -0.00054633111, 0.0220430512, 0.000931310933, 0.999847174, -0.0174584202, -0.0220301449, 0.0174747054, 0.999604583)
+      game.ReplicatedStorage.Interaction.ClientRequestOwnership:FireServer(v.Main)
+      v.Main.CFrame = CFrame.new(316.222229, -0.56983912, 79.0911713, 0.999756873, -0.00054633111, 0.0220430512, 0.000931310933, 0.999847174, -0.0174584202, -0.0220301449, 0.0174747054, 0.999604583)
+      game.ReplicatedStorage.Interaction.ClientIsDragging:FireServer(v.Main)
+      v.Main.CFrame = CFrame.new(316.222229, -0.56983912, 79.0911713, 0.999756873, -0.00054633111, 0.0220430512, 0.000931310933, 0.999847174, -0.0174584202, -0.0220301449, 0.0174747054, 0.999604583)
+      wait()
+    end
+        end
+    end
+end
+]])();
+----------------//funtion//-------------------
+loadstring([[
+function SellPlanks()
+    for _, Plank in pairs(game.Workspace.PlayerModels:GetChildren()) do
+           if Plank.Name=="Plank" and Plank:findFirstChild("Owner") then
+               if Plank.Owner.Value == game.Players.LocalPlayer then
+                   for i,v in pairs(Plank:GetChildren()) do
+                       if v.Name=="WoodSection" then
+                           spawn(function()
+                               for i=1,10 do
+                                   wait()
+                                   v.CFrame=CFrame.new(Vector3.new(315, -0.296, 85.791))*CFrame.Angles(math.rad(90),0,0)
+                               end
+                           end)
+                       end
+                   end
+                   spawn(function()
+                       for i=1,20 do
+                           wait()
+                           game.ReplicatedStorage.Interaction.ClientIsDragging:FireServer(Plank)
+                       end
+                   end)
+               end
+           end
+       end
+   end
+   ]])();
+----------------//funtion//-------------------
+loadstring([[
+function teleport()
+    for _, Log in pairs(game.Workspace.LogModels:GetChildren()) do
+        if Log.Name:sub(1, 6) == "Loose_" and Log:findFirstChild("Owner") then
+            if Log.Owner.Value == game.Players.LocalPlayer then
+                Log:MoveTo(game.Players.LocalPlayer.Character.HumanoidRootPart.Position + Vector3.new(0, 20, 0))
+                for i=1,100 do
+                    game.ReplicatedStorage.Interaction.ClientIsDragging:FireServer(Log)
+                end
+            end
+        end
+end 
+end
+]])();
+----------------//funtion//-------------------
+loadstring([[
+function Grid()
+    if value then
+        for i, v in pairs (game:GetService("Workspace").Properties:GetDescendants()) do
+        if v:FindFirstChild("Owner") and tostring(v.Owner.Value) == game.Players.LocalPlayer.Name then
+        local p = Instance.new("Part", v.OriginSquare)
+        p.Name = "Test"
+        p.Position = v.OriginSquare.Position + Vector3.new(0,0.2,0)
+        p.Size = Vector3.new(200, 0.05, 200)
+        p.Anchored = true
+        p.CanCollide = false
+        p.Transparency = 1
+        local texture = Instance.new("Texture",  v.OriginSquare.Test)
+        texture.Texture = "rbxassetid://2608576497"
+        texture.StudsPerTileU = 4
+        texture.StudsPerTileV = 4
+        texture.Face = "Top"
+        end
+        end
+        else
+        for i,v in pairs(game.Workspace:GetDescendants()) do
+        if v.Name == "Test" then
+        v:Destroy()
+        end
+        end
+        end
+end
+]])();
+----------------//funtion//-------------------
+loadstring([[
+function WaterTranperency()
+    for i,v in pairs(game:GetService("Workspace").Water:GetChildren()) do
+        if v.Name == "Water" then
+        v.Transparency = 1
+        else
+        v.Transparency = 0
+    end
+    end
+end
+]])();
+----------------//funtion//-------------------
+loadstring([[
+function Freecam()
+    ToggleKey = Enum.KeyCode.M
+
+    SprintKey = Enum.KeyCode.Tab
+    
+    localPlayer = game.Players.LocalPlayer
+    
+    Camera = game.Workspace.CurrentCamera
+    Mouse = localPlayer:GetMouse()
+    
+    UserInputService = game:GetService("UserInputService")
+    
+    
+    movePosition = Vector2.new(0,0)
+    moveDirection = Vector3.new(0,0,0)
+    
+    targetMovePosition = movePosition
+    
+    Y_Sensitivity = 300;
+    X_Sensitivity = 300;
+    
+    lastRightButtonDown = Vector2.new(0,0)
+    rightMouseButtonDown = false
+    
+    targetFOV = 70
+    
+    sprinting = false;
+    sprintingSpeed = 3;
+    
+    keysDown = {}
+    
+    moveKeys = {
+        [Enum.KeyCode.D] = Vector3.new(1,0,0),
+        [Enum.KeyCode.A] = Vector3.new(-1,0,0),
+        [Enum.KeyCode.S] = Vector3.new(0,0,1),
+        [Enum.KeyCode.W] = Vector3.new(0,0,-1),
+        [Enum.KeyCode.E] = Vector3.new(0,1,0),
+        [Enum.KeyCode.Q] = Vector3.new(0,-1,0)
+    }
+    
+    Tween = function(a,b,t)
+        if t == 1 then
+            return b
+        else 
+            if tonumber(a) then
+                return a * (1-t) + (b*t)
+            else
+                return a:Lerp(b,t);
+            end
+        end
+    end
+    
+    ClampVector3 = function(x,min,max)
+        return 
+            Vector3.new(
+                math.clamp(x.X,min.X,max.X),
+                math.clamp(x.Y,min.Y,max.Y),
+                math.clamp(x.Z,min.Z,max.Z)
+            )
+    
+    end
+    
+    
+    UserInputService.InputChanged:connect(function(inputObject)
+        if inputObject.UserInputType == Enum.UserInputType.MouseMovement then
+            movePosition = movePosition + Vector2.new(inputObject.Delta.x,inputObject.Delta.y)
+        end
+    end)
+    
+    CalculateMovement = function()
+        local newMovement = Vector3.new(0,0,0)
+        for i,v in pairs(keysDown) do
+            newMovement = newMovement + (moveKeys[i] or Vector3.new(0,0,0))
+        end
+        return newMovement
+    end
+    
+    Round = function(num, numDecimalPlaces)
+        return math.floor((num/numDecimalPlaces) + .5)*numDecimalPlaces
+    end
+    
+    Input = function(input,gameProcessed)
+        if moveKeys[input.KeyCode] then
+            if input.UserInputState == Enum.UserInputState.Begin then
+                keysDown[input.KeyCode] = true
+            elseif input.UserInputState == Enum.UserInputState.End then
+                keysDown[input.KeyCode] = nil
+            end
+        else
+            if input.UserInputState == Enum.UserInputState.Begin then
+                print(input.KeyCode)
+                if input.UserInputType == Enum.UserInputType.MouseButton2 then
+                    rightMouseButtonDown = true
+                    lastRightButtonDown = Vector2.new(Mouse.X,Mouse.Y)
+                    UserInputService.MouseBehavior = Enum.MouseBehavior.LockCurrentPosition
+                elseif input.KeyCode == Enum.KeyCode.Z then
+                    targetFOV = 20
+                elseif input.KeyCode == SprintKey then
+                    sprinting = true
+                end
+            else
+                if input.UserInputType == Enum.UserInputType.MouseButton2 then
+                    rightMouseButtonDown = false
+                    UserInputService.MouseBehavior = Enum.MouseBehavior.Default
+                elseif input.KeyCode == Enum.KeyCode.Z then
+                    targetFOV = 70
+                elseif input.KeyCode == SprintKey then
+                    sprinting = false
+                end
+            end
+        end
+    end
+    
+    Mouse.WheelForward:connect(function()
+        Camera.CoordinateFrame = Camera.CoordinateFrame * CFrame.new(0,0,-5)
+    end)
+    
+    Mouse.WheelBackward:connect(function()
+        Camera.CoordinateFrame = Camera.CoordinateFrame * CFrame.new(-0,0,5)
+    end)
+    
+    UserInputService.InputBegan:connect(Input)
+    UserInputService.InputEnded:connect(Input)
+    
+    local Toggled = false
+    game:GetService("UserInputService").InputBegan:connect(function(inputObject)
+        if inputObject.KeyCode == ToggleKey then
+            Toggled = not Toggled
+            if Toggled then
+                Camera.CameraType = Enum.CameraType.Scriptable
+                game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
+                game.Players.LocalPlayer.Character.Humanoid.PlatformStand = true 
+            else
+                game.Players.LocalPlayer.Character.Humanoid.PlatformStand = false
+                game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
+                game.Workspace.CurrentCamera.CameraSubject = game.Players.LocalPlayer.Character.Humanoid
+                game.Workspace.CurrentCamera.CameraType = "Custom"
+            end
+        end
+    end)
+    
+    
+    game:GetService("RunService").RenderStepped:Connect(function()
+        if Toggled then
+            local mouseTarget = Mouse.Hit
+    
+            targetMovePosition = movePosition
+            Camera.CoordinateFrame = CFrame.new(Camera.CoordinateFrame.p) * CFrame.fromEulerAnglesYXZ(-targetMovePosition.Y/Y_Sensitivity ,-targetMovePosition.X/X_Sensitivity, 0) * CFrame.new(CalculateMovement() * ((({[true]=sprintingSpeed})[sprinting]) or .5) )
+            Camera.FieldOfView = Tween(Camera.FieldOfView,targetFOV,.5)
+            if rightMouseButtonDown then
+                UserInputService.MouseBehavior = Enum.MouseBehavior.LockCurrentPosition
+                movePosition = movePosition - (lastRightButtonDown - Vector2.new(Mouse.X,Mouse.Y))
+                lastRightButtonDown = Vector2.new(Mouse.X,Mouse.Y)
+            end
+        end
+    end)
+end
+]])();
+----------------//funtion//-------------------
+loadstring([[
+function Maker()
+    local selCenter = Instance.new("SelectionBox")
+	selCenter.Color3 = Color3.new(1, 0, 0)
+	if t == true then
+		for i, v in pairs(game.Workspace.Properties:GetChildren()) do
+			if v:FindFirstChild("Owner") and v.Owner.Value == game.Players.LocalPlayer then
+				centerSquare = v.OriginSquare
+			end
+		end
+		selCenter.Parent = centerSquare
+		selCenter.Adornee = centerSquare
+	else
+		if centerSquare:FindFirstChild("SelectionBox") then
+			centerSquare.SelectionBox:Destroy()
+		end
+	end
+end
+]])();
+----------------//funtion//-------------------
+loadstring([[
+function TeleportTool()
+    mouse = game.Players.LocalPlayer:GetMouse()
+    tool = Instance.new("Tool")
+    tool.RequiresHandle = false
+    tool.Name = "Teleport Tool"
+    tool.Activated:connect(function()
+    local pos = mouse.Hit+Vector3.new(0,2.5,0)
+    pos = CFrame.new(pos.X,pos.Y,pos.Z)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = pos
+    end)
+    tool.Parent = game.Players.LocalPlayer.Backpack
+end
+]])();
+----------------//funtion//-------------------
+loadstring([[
+function Basetp()
+	for i,v in pairs(game.Workspace.Properties:GetChildren()) do
+        if v.Owner.Value == game.Players.LocalPlayers then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.OriginSquare.CFrame
+        end
+        end
+end
+]])();
+----------------//funtion//-------------------
+loadstring([[
+function POG()
+	for i,v in pairs(game.Workspace.Properties:GetChildren()) do
+        if v.Owner.Value == plrselected then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.OriginSquare.CFrame
+        end
+        end
+end
+]])();
+----------------//funtion//-------------------
+----------------//funtion//-------------------
+loadstring([[
+function Cords()
+    function round(num, numDecimalPlaces)
+        local mult = 10^(numDecimalPlaces or 0)
+        return math.floor(num * mult + 0.5) / mult
+    end
+    LocationX = round(game.Players.LocalPlayer.Character.HumanoidRootPart.Position.x, 1)
+    LocationY = round(game.Players.LocalPlayer.Character.HumanoidRootPart.Position.y, 1)
+    LocationZ = round(game.Players.LocalPlayer.Character.HumanoidRootPart.Position.z, 1)
+end
+]])();
+----------------//funtion//-------------------
+loadstring([[
+function So()
+    local plr =  _G.Player
+    local StealType = item
+    local Teleported = 0
+    qty = tonumber(qty)
+   if Teleported < qty then
+    print("test1")
+    for i,v in pairs(game.Workspace.PlayerModels:GetChildren()) do
+      if Teleported < qty then
+    if v:FindFirstChild("Owner") and tostring(v.Owner.Value) == plr then
+    if v:FindFirstChild("Type") and tostring(v.Type.Parent) == StealType then
+    if v.PrimaryPart then
+    v.PrimaryPart.CFrame = CFrame.new(LocationX, LocationY, LocationZ)
+    game.ReplicatedStorage.Interaction.ClientRequestOwnership:FireServer(v.PrimaryPart)
+    v.PrimaryPart.CFrame = CFrame.new(LocationX, LocationY, LocationZ)
+    game.ReplicatedStorage.Interaction.ClientIsDragging:FireServer(v.PrimaryPart)
+    v.PrimaryPart.CFrame = CFrame.new(LocationX, LocationY, LocationZ)
+    wait(0.1)
+    Teleported = Teleported + 1
+    end
+    end
+    end
+    end
+    end
+   end
+end
+]])();
+----------------//funtion//-------------------
+loadstring([[
+function wood()
+local Type = "TreeClass"
+    local Times = 0
+    local hrp = game.Players.LocalPlayer.Character.HumanoidRootPart
+    for i, v in pairs(game.Workspace.PlayerModels:GetChildren()) do
+        if v:FindFirstChild("Owner") and tostring(v.Owner.Value) == plrselected then
+            if v:FindFirstChild("Type") and tostring(v.Type.Value) == Type then
+            end
+            if v:FindFirstChild("TreeClass") and v.WoodSection then
+                if (hrp.CFrame.p - v.WoodSection.CFrame.p).Magnitude < 100 then
+                    v.WoodSection.CFrame = CFrame.new(LocationX, LocationY, LocationZ) * CFrame.Angles(math.rad(90), 165, 0)
+                    game.ReplicatedStorage.Interaction.ClientRequestOwnership:FireServer(v.WoodSection)
+                    v.WoodSection.CFrame = CFrame.new(LocationX, LocationY, LocationZ) * CFrame.Angles(math.rad(90), 165, 0)
+                    game.ReplicatedStorage.Interaction.ClientIsDragging:FireServer(v.WoodSection)
+                    v.WoodSection.CFrame = CFrame.new(LocationX, LocationY, LocationZ) * CFrame.Angles(math.rad(90), 165, 0)
+                    Times = Times + 0.5
+                    if Times == 10 then
+                        Times = 0
+                        wait(0.1)
+                    end
+                end
+            end
+        end
+    end
+end
+]])();
+----------------//function//------------------
+loadstring([[
+function Clearb()
+	for i, v in pairs(game.Workspace.PlayerModels:GetChildren()) do
+		if v:FindFirstChild("Owner") and v:FindFirstChild("Type") and v.Owner.Value == game.Players.LocalPlayer then
+			if v.Type.Value == "Blueprint" then
+				local A_1 = v
+				local Event = game:GetService("ReplicatedStorage").Interaction.DestroyStructure
+				Event:FireServer(A_1)
+			end
+		end
+	end
+end
+]])();
+----------------//function//------------------
+loadstring([[
+function clearh()
+for i,v in pairs(game.Workspace.PlayerModels:GetChildren()) do
+if v:FindFirstChild("Owner") and v:FindFirstChild("Type") and v.Owner.Value == game.Player.LocalPlayer then
+if v.Type.Value == "Gift" then
+local A_1 = v
+local Event = game:GetService("ReplicatedStorage").Interaction.DestroyStructure
+Event:FireServer(A_1)
+end
+end
+end
+end
+]])();
+----------------//function//------------------
+loadstring([[
+function Clearj()
+for i,v in pairs(game.Workspace.PlayerModels:GetChildren()) do
+if v:FindFirstChild("Owner") and v:FindFirstChild("Type") and v.Owner.Value == game.Player.LocalPlayer then
+if v.Type.Value == "Tool" then
+local A_1 = v
+local Event = game:GetService("ReplicatedStorage").Interaction.DestroyStructure
+Event:FireServer(A_1)
+end
+end
+end
+end
+]])();
+----------------//function//------------------
+loadstring([[
+function Clearv()
+for i,v in pairs(game.Workspace.PlayerModels:GetChildren()) do
+if v:FindFirstChild("Owner") and v:FindFirstChild("Type") and v.Owner.Value == game.Player.LocalPlayer  then
+if v.Type.Value == "Furniture" then
+local A_1 = v
+local Event = game:GetService("ReplicatedStorage").Interaction.DestroyStructure
+Event:FireServer(A_1)
+end
+end
+end
+end
+]])();
+----------------//function//------------------
+loadstring([[
+function Clearp()
+for i,v in pairs(game.Workspace.PlayerModels:GetChildren()) do
+if v:FindFirstChild("Owner") and v:FindFirstChild("Type") and v.Owner.Value == game.Player.LocalPlayer then
+if v.Type.Value == "TreeClass" then
+local A_1 = v
+local Event = game:GetService("ReplicatedStorage").Interaction.DestroyStructure
+Event:FireServer(A_1)
+end
+end
+end
+end
+]])();
+----------------//function//------------------
+loadstring([[
+function Clearz()
+	for i, v in pairs(game.Workspace.PlayerModels:GetChildren()) do
+		if v:FindFirstChild("Owner") and v:FindFirstChild("Type") and v.Owner.Value == plrselected then
+			if v.Type.Value == "Structure" or v.Type.Value == "Furniture" then
+				local A_1 = v
+				local Event = game:GetService("ReplicatedStorage").Interaction.DestroyStructure
+				Event:FireServer(A_1)
+			end
+		end
+	end
+end
+]])();
+
+----------------//function//------------------
+
+function dupemoney(fk)
+	if moneyCooldown then
+		x("Cooldown", "Wait for your money to return.", 2)
+		return
+	else
+		moneyCooldown = true;
+		if not fk then
+			x("Duping Started", "Reload your slot. Then, wait about 2 minutes for your money to return.", 5)
+		end;
+		game.ReplicatedStorage.Transactions.ClientToServer.Donate:InvokeServer(game.Players.LocalPlayer, game.Players.LocalPlayer.leaderstats.Money.Value, 1)
+		x("Duping Finished", "The money that you've duplicated earlier is returned.", 5)
+		moneyCooldown = false
+	end
+end;
+
+
+--main
+
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+local Window = Library.CreateLib("S409 Hub", colors)
+
+--player
+
+local Tab = Window:NewTab("Player")
+local Section = Tab:NewSection("Local player options")
+Section:NewSlider("Walkspeed", "Change your walkspeed", 500, 16, function(s) -- 500 (MaxValue) | 0 (MinValue)
+    getgenv().walkspeed = s
+
+local oldnewindex
+oldnewindex = hookmetamethod(game, "__newindex", function(a, b, c)
+    if tostring(a) == "Humanoid" and tostring(b) == "WalkSpeed" then
+        return oldnewindex(a, b, getgenv().walkspeed)
+    end
+    return oldnewindex(a, b, c)
+end)
+end)
+Section:NewSlider("Jumppower", "Change your jumppower", 400, 50, function(new)
+    Jumppower(new)
+end)
+
+
+Section:NewToggle("Noclip", "Enables Noclip", function(state)
+    if state then
+        noclipping = true
+        toggleNoClip()
+    else
+        noclipping = false
+        toggleNoClip()
+    end
+end)
+
+Section:NewSlider("FOV", "FOV", 120, 16, function(fov)
+    game.Workspace.Camera.FieldOfView = fov --efef
+end)
+
+Section:NewButton("Reset FOV", "Reset FOV", function()
+    game.Workspace.Camera.FieldOfView = 73
+end)
+
+Section:NewSlider("HipHight", "HipHight", 200, 0, function(value)
+	game.Players.LocalPlayer.Character.Humanoid.HipHeight = value
+end,
+	0, 200
+)
+
+local player = game.Players.LocalPlayer
+local mouse = player:GetMouse()
+Section:NewKeybind("Key TP", "Key TP", Enum.KeyCode.Q, function()
+    game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(mouse.hit.p.X, mouse.hit.p.Y, mouse.hit.p.Z) + Vector3.new(0,2,0)
+end,
+	Enum.KeyCode == _G.KeyTp
+)
+
+_G.FlySpeed = 50
+
+	repeat wait()
+		until game.Players.LocalPlayer and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:findFirstChild("Head") and game.Players.LocalPlayer.Character:findFirstChild("Humanoid")
+		local Mouse = game.Players.LocalPlayer:GetMouse()
+		repeat wait() until Mouse
+		local Player = game.Players.LocalPlayer
+		local HumRoot = Player.Character.HumanoidRootPart
+		local Hum = Player.Character.Humanoid
+		isFlying = false
+		local SteerSpeed = _G.FlySpeed or 50
+		local Steer = {f = 0, b = 0, l = 0, r = 0}
+		local BackSteer = {f = 0, b = 0, l = 0, r = 0}
+		local MaxSpeed = 200
+	
+		function Fly()
+			local Gyro = Instance.new('BodyGyro', HumRoot)
+				Gyro.P = 9e4
+				Gyro.maxTorque = Vector3.new(9e9, 9e9, 9e9)
+				Gyro.CFrame = HumRoot.CFrame
+			local Velocity = Instance.new('BodyVelocity', HumRoot)
+				Velocity.Velocity = Vector3.new(0,0.1,0)
+				Velocity.maxForce = Vector3.new(9e9, 9e9, 9e9)
+			repeat wait()
+				Hum.PlatformStand = true
+				if Steer.l + Steer.r ~= 0 or Steer.f + Steer.b ~= 0 then
+					SteerSpeed = _G.FlySpeed
+					if SteerSpeed > MaxSpeed then
+						SteerSpeed = MaxSpeed
+					end
+				elseif not (Steer.l + Steer.r ~= 0 or Steer.f + Steer.b ~= 0) and speed ~= 0 then
+					SteerSpeed = SteerSpeed-50
+					if SteerSpeed < 0 then
+						SteerSpeed = 0    
+					end
+				end
+				if (Steer.l + Steer.r) ~= 0 or (Steer.f + Steer.b) ~= 0 then
+					Velocity.Velocity = ((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (Steer.f+Steer.b)) + ((game.Workspace.CurrentCamera.CoordinateFrame * CFrame.new(Steer.l+Steer.r,(Steer.f+Steer.b)*.2,0).p) - game.Workspace.CurrentCamera.CoordinateFrame.p)) * SteerSpeed
+					BackSteer = {f = Steer.f ,b = Steer.b ,l = Steer.l, r = Steer.r}
+				elseif (Steer.l + Steer.r == 0 or Steer.f + Steer.b == 0) and SteerSpeed ~= 0 then
+					Velocity.Velocity = ((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (BackSteer.f+BackSteer.b)) + ((game.Workspace.CurrentCamera.CoordinateFrame * CFrame.new(BackSteer.l+BackSteer.r,(BackSteer.f+BackSteer.b)*.2,0).p) - game.Workspace.CurrentCamera.CoordinateFrame.p)) * SteerSpeed
+				else
+					Velocity.Velocity = Vector3.new(0,0.1,0)
+				end
+				Gyro.CFrame = game.Workspace.CurrentCamera.CoordinateFrame * CFrame.Angles(-math.rad((Steer.f+Steer.b)*50*SteerSpeed/MaxSpeed),0,0)
+			until not isFlying
+			local SteerSpeed = 0
+			local Steer = {F = 0,B = 0,L = 0,R = 0}
+			local BackSteer = {F = 0,B = 0,L = 0,R = 0}
+			Gyro:Destroy()
+			Velocity:Destroy()
+			Hum.PlatformStand = false
+		end
+	
+		local Mouse = Player:GetMouse()
+	
+		Mouse.KeyDown:Connect(function(Key)
+			if Key:lower() == "w" then
+				isWDown = true
+				Steer.f = 1
+			elseif Key:lower() == "a" then
+				isADown = true
+				Steer.l = -1
+			elseif Key:lower() == "s" then
+				isSDown = true
+				Steer.b = -1
+			elseif Key:lower() == "d" then
+				isSDown = true
+				Steer.r = 1
+			end
+		end)
+		Mouse.KeyUp:Connect(function(Key)
+			if Key:lower() == "w" then
+				isWDown = false
+				Steer.f = 0
+			elseif Key:lower() == "a" then
+				isADown = false
+				Steer.l = 0
+			elseif Key:lower() == "s" then
+				isSDown = false
+				Steer.b = 0
+			elseif Key:lower() == "d" then
+				isDDown = false
+				Steer.r = 0
+			end
+		end)
+
+Section:NewToggle("Fly", "Fly", function(state)
+    if not state then
+        isFlying = false
+        HumRoot.BodyGyro:Destroy()
+        HumRoot.BodyVelocity:Destroy()
+        Hum.PlatformStand = false
+    else
+    isFlying = true
+        Fly()
+end 
+end)
+
+Section:NewSlider("Fly Speed", "Fly Speed", 300, 16, function(flyspeed)
+    _G.FlySpeed = flyspeed
+end,
+	50, 200
+)
+
+--game
+
+local Tab = Window:NewTab("World")
+local Section = Tab:NewSection("Sky options")
+game.Lighting.Changed:connect(function()
+    if day then
+        game.Lighting.TimeOfDay = "12:00:00"
+        game.Lighting.Brightness = 1
+    elseif night then
+        game.Lighting.TimeOfDay = "24:00:00"
+        game.Lighting.Brightness = 0
+    end
+end)
+
+Section:NewToggle("Always Day", "Always Day", function(state)
+day = state
+end
+)
+
+Section:NewToggle("Always Night", "Always Night", function(state)
+night = state
+end
+)
+
+Section:NewToggle("Shadows", "Shadows", function(value)
+game.Lighting.GlobalShadows = value
+end
+)
+
+Section:NewToggle("No Fog", "No Fog", function(value)
+game.Lighting.Changed:connect(function()
+_G.d = value == true 
+while _G.d  do
+game: service"RunService".RenderStepped:wait()
+game.Lighting.FogEnd = 9999
+end
+end)
+end)
+
+Section:NewToggle("Better Graphics", "Better Graphics", function(value)
+if value == true then
+game.Lighting.Brightness = 4
+game.Lighting.ColorCorrection.Saturation = 1	
+game.Lighting.ColorCorrection.Contrast = 1
+else
+game.Lighting.Brightness = 0
+game.Lighting.ColorCorrection.Saturation = 0	
+game.Lighting.ColorCorrection.Contrast = 0
+end
+end)
+
+
+local Section = Tab:NewSection("Tree options")
+Section:NewButton("Remove Trees", "Removes All The Trees", function()
+    local CoreGui = game:GetService("StarterGui")
+
+local bindf = Instance.new("BindableFunction")
+bindf.OnInvoke = function(buttonText)
+    RemoveTress()
+end
+
+local Notify = CoreGui:SetCore("SendNotification", {
+    Title = "Remove all trees";
+    Text = "Are you sure you would like to remove all the trees? This will lag for a few secs";
+    Duration = 5;
+    Button1 = "Yes";
+    Callback = bindf
+})
+end)
+
+local Section = Tab:NewSection("Game options")
+Section:NewToggle("Destory Water", "Destory Water", function(value)
+if value == true then
+for i,v in pairs (game.Workspace.Water:GetChildren()) do
+if v.Name == "Water" then
+v.Transparency = 1
+end
+end
+else
+for i,v in pairs (game.Workspace.Water:GetChildren()) do
+if v.Name == "Water" then
+v.Transparency = 0
+end
+end
+end 
+end)
+
+Section:NewToggle("Destroy Snow Boulder", "Destroy Snow Boulder", function(value)
+if value == true then
+for i,v in pairs(game.Workspace.Region_Snow.PartSpawner:GetChildren()) do
+if v.Name == "Boulder" then
+v.Transparency = 1
+end
+end
+else
+for i,v in pairs(game.Workspace.Region_Snow.PartSpawner:GetChildren()) do
+if v.Name == "Boulder" then
+v.Transparency = 0
+end
+end
+end
+end)
+
+Section:NewToggle("Destroy Snow", "Destroy Snow", function(value)
+if value == true then
+for i,v in pairs(game.Workspace.Region_Snow:GetChildren()) do
+if v.Name == "Snow" then
+v.Transparency = 1
+end
+end
+else
+for i,v in pairs(game.Workspace.Region_Snow:GetChildren()) do
+if v.Name == "Snow" then
+v.Transparency = 0
+end
+end
+end
+end)
+
+Section:NewToggle("Water Walk", "Water Walk", function(value)
+local q = game.Workspace.Water
+for i,v in pairs(q:GetChildren()) do 
+if v.Name == "Water" then
+if value == false then
+v.CanCollide = false
+else if value == true then
+v.CanCollide = true
+end
+end
+end
+end
+end)
+
+Section:NewToggle("Leaked Items", "Leaked Items", function(value)
+if value == true then
+game.ReplicatedStorage.Purchasables:Clone().Parent = game.Workspace.PlayerModels
+end
+if value == false then
+game.ReplicatedStorage.Purchasables:Clone().Parent = game.Workspace.PlayerModels:Destroy()
+end
+end)
+
+--wood
+
+local Tab = Window:NewTab("Wood")
+local Section = Tab:NewSection("Logs")
+Section:NewButton("Sell Logs", "Sell logs", function()
+    Selllogs()
+end)
+
+Section:NewButton("Tp logs", "Tp logs", function()
+for _, Log in pairs(game.Workspace.LogModels:GetChildren()) do
+if Log.Name:sub(1, 6) == "Loose_" and Log:findFirstChild("Owner") then
+if Log.Owner.Value == game.Players.LocalPlayer then
+Log:MoveTo(game.Players.LocalPlayer.Character.HumanoidRootPart.Position + Vector3.new(0, 20, 0))
+for i=1,100 do
+game.ReplicatedStorage.Interaction.ClientIsDragging:FireServer(Log)
+end
+end
+end
+end 
+end)
+
+local Section = Tab:NewSection("Planks")
+Section:NewButton("Sell Planks", "Sell Planks", function()
+    SellPlanks()
+end)
+
+-- dupe
+
+local Tab = Window:NewTab("Plot / dupe")
+local Section = Tab:NewSection("Plot")
+
+Section:NewButton("Self Dupe Middle Of Plot", "Self Dupe Middle Of Plot", function()
+local imcool = print('Put Self Marker on')
+local lwew = game.Workspace.Properties
+for i,v in  pairs (lwew:GetChildren()) do
+if v:FindFirstChild("Owner") and v.Owner.Value == game.Players.LocalPlayer then
+v.OriginSquare.Color = Color3.fromRGB(255, 105, 180)
+end
+end
+local Loadslot = game.ReplicatedStorage.LoadSaveRequests.ClientMayLoad:InvokeServer(Player)
+local x = print('Starting now')
+wait(3)
+game.ReplicatedStorage.Interaction.ClientSetListPlayer:InvokeServer(game:GetService'Players'.LocalPlayer.WhitelistFolder, game.Players.LocalPlayer, true)
+wait();
+if Loadslot then
+game.ReplicatedStorage.LoadSaveRequests.RequestLoad:InvokeServer(game.Players.LocalPlayer.CurrentSaveSlot.Value, Player)
+local sde = print('U have loaded your plot')
+local c = game.Workspace.Properties
+for i,v in  pairs (c:GetChildren()) do
+v.OriginSquare.Color = Color3.fromRGB(124, 92, 70)
+end
+else
+local caq = print('On cooldown try again soon')
+end
+end)
+
+Section:NewSlider("What Slot?", "What Slot?", 6, 0, function(value)
+    slot = value
+end)
+
+Section:NewButton("Load Plot", "Load Plot", function()
+local ni = game.Players.LocalPlayer
+game:GetService("ReplicatedStorage").LoadSaveRequests.RequestLoad:InvokeServer(slot,ni)
+end)
+
+Section:NewButton("Force Save", "Force Save", function()
+local ni = game.Players.LocalPlayer
+game:GetService("ReplicatedStorage").LoadSaveRequests.RequestSave:InvokeServer(slot, ni)
+end)
+
+Section:NewButton("Speed Reload", "Speed Reload", function()
+if game:GetService("Players").LocalPlayer.CurrentSaveSlot.Value == -1 then
+local args = {
+[1] = -1,
+[2] = game:GetService("Players").LocalPlayer}
+for s,d in pairs(game.Workspace.PlayerModels:GetChildren()) do
+--game:GetService("ReplicatedStorage").LoadSaveRequests.RequestLoad:InvokeServer(4,game.Players.LocalPlayer)
+if d:FindFirstChild("Owner") and d.Owner.Value == game.Players.LocalPlayer then
+local silent = d
+local Event = game:GetService("ReplicatedStorage").Interaction.DestroyStructure
+Event:FireServer(silent)
+end
+end
+game:GetService("ReplicatedStorage").LoadSaveRequests.RequestLoad:InvokeServer(unpack(args))
+end
+end)
+
+--free land / max land
+
+local Section = Tab:NewSection("Free land / max land")
+
+Section:NewButton("FreeLand", "FreeLand", function()
+    FreeLand()
+end)
+    
+Section:NewButton("Maxland", "Maxland", function()
+    Maxland()
+end)
+
+Section:NewButton("SellSign", "SellSign", function()
+local sellsigh = game.workspace.PlayerModels
+for i,v in pairs(sellsigh:GetChildren()) do
+if v:FindFirstChild("Owner") and v.Owner.Value == game.Players.LocalPlayer then
+if v:FindFirstChild("ItemName") and v.ItemName.Value == "PropertySoldSign" then
+local dragging = game:GetService("ReplicatedStorage").Interaction.ClientIsDragging:FireServer(v)
+v:MoveTo(Vector3.new(314.54, -0.5, 86.823))
+local draggin1 = game:GetService("ReplicatedStorage").Interaction.ClientIsDragging:FireServer(v.Sell)
+v:MoveTo(Vector3.new(314.54, -0.5, 86.823))
+wait();
+end;
+end;
+end;
+end)
+
+
+--dupe
+local Section = Tab:NewSection("Dupe")
+
+Section:NewLabel("Donate Dupe")
+Section:NewLabel("Please select the base number you want to donate")
+Section:NewLabel("PLEASE MAKE SURE TO LOAD INFRONT OF LAND")
+
+Section:NewButton("Slot 1", "DONATE DUPE", function()
+    local CoreGui = game:GetService("StarterGui")
+
+        CoreGui:SetCore("SendNotification", {
+            Title = "Donate Dupe";
+            Text = "Please make sure to load infront of the land store to make sure you base saves and dont get wiped!";
+            Duration = 50000000000000000000000;
+            Button1 = "Okay!";
+        })
+    local CoreGui = game:GetService("StarterGui")
+
+        CoreGui:SetCore("SendNotification", {
+            Title = "Donate base";
+            Text = "A notification like this will pop up when then other person can load on your base. Please make sure to whitelist the other person.";
+            Duration = 50000000000000000000000;
+            Button1 = "Okay!";
+        })
+    local CoreGui = game:GetService("StarterGui")
+
+        CoreGui:SetCore("SendNotification", {
+            Title = "Donate base";
+            Text = "This is not our fault if your base gets wiped please dont make tickets about not following our info.";
+            Duration = 50000000000000000000000;
+            Button1 = "Okay!";
+        })
+function Donate(Slot)
+    local EmptyPlot
+    local LocalPlayer = game.Players.LocalPlayer
+    local HRP = LocalPlayer.Character.HumanoidRootPart
+    local OldCFrame
+    local Load = game:GetService("ReplicatedStorage").LoadSaveRequests
+    
+    Load.RequestLoad:InvokeServer(Slot,game.Players.LocalPlayer)
+    repeat wait() until Load.ClientMayLoad:InvokeServer(game.Players.LocalPlayer)
+    OldCFrame = HRP.CFrame
+    for i,v in pairs(game:GetService("Workspace").Properties:GetChildren()) do
+        if v:FindFirstChild("Owner") and tostring(v.Owner.Value) == "nil" then
+        EmptyPlot = v
+    end
+    end
+    
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = EmptyPlot.OriginSquare.CFrame + Vector3.new(0,1,0)
+    game.ReplicatedStorage.Interaction.ClientSetListPlayer:InvokeServer(game:GetService"Players".LocalPlayer.WhitelistFolder, game.Players.LocalPlayer, true)
+    repeat game.ReplicatedStorage.Interaction.ClientIsDragging:FireServer(EmptyPlot) wait() until EmptyPlot.Owner.Value == LocalPlayer
+    HRP.CFrame = OldCFrame
+    Load.RequestLoad:InvokeServer(-1,game.Players.LocalPlayer)
+    local CoreGui = game:GetService("StarterGui")
+    
+    local bindf = Instance.new("BindableFunction")
+    bindf.OnInvoke = function(buttonText)
+        print("Ready they can now load!")
+    end
+    
+    local Notify = CoreGui:SetCore("SendNotification", {
+        Title = "Donate dupe";
+        Text = "Your mate can now load!";
+        Duration = 5000000000000000000000;
+        Button1 = "Okay!";
+        Callback = bindf
+    })
+    end
+    
+    Donate(1) --- Enter the slot number for the base that you want to donate 
+end)
+
+Section:NewButton("Slot 2", "DONATE DUPE", function()
+    local CoreGui = game:GetService("StarterGui")
+
+        CoreGui:SetCore("SendNotification", {
+            Title = "Donate base";
+            Text = "Please make sure to load infront of the land store to make sure you base saves and dont get wiped!";
+            Duration = 50000000000000000000000;
+            Button1 = "Okay!";
+        })
+    local CoreGui = game:GetService("StarterGui")
+
+        CoreGui:SetCore("SendNotification", {
+            Title = "Donate base";
+            Text = "A notification like this will pop up when then other person can load on your base. Please make sure to whitelist the other person.";
+            Duration = 50000000000000000000000;
+            Button1 = "Okay!";
+        })
+    local CoreGui = game:GetService("StarterGui")
+
+        CoreGui:SetCore("SendNotification", {
+            Title = "Donate base";
+            Text = "This is not our fault if your base gets wiped please dont make tickets about not following our info.";
+            Duration = 50000000000000000000000;
+            Button1 = "Okay!";
+        })
+function Donate(Slot)
+    local EmptyPlot
+    local LocalPlayer = game.Players.LocalPlayer
+    local HRP = LocalPlayer.Character.HumanoidRootPart
+    local OldCFrame
+    local Load = game:GetService("ReplicatedStorage").LoadSaveRequests
+    
+    Load.RequestLoad:InvokeServer(Slot,game.Players.LocalPlayer)
+    repeat wait() until Load.ClientMayLoad:InvokeServer(game.Players.LocalPlayer)
+    OldCFrame = HRP.CFrame
+    for i,v in pairs(game:GetService("Workspace").Properties:GetChildren()) do
+        if v:FindFirstChild("Owner") and tostring(v.Owner.Value) == "nil" then
+        EmptyPlot = v
+    end
+    end
+    
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = EmptyPlot.OriginSquare.CFrame + Vector3.new(0,1,0)
+    game.ReplicatedStorage.Interaction.ClientSetListPlayer:InvokeServer(game:GetService"Players".LocalPlayer.WhitelistFolder, game.Players.LocalPlayer, true)
+    repeat game.ReplicatedStorage.Interaction.ClientIsDragging:FireServer(EmptyPlot) wait() until EmptyPlot.Owner.Value == LocalPlayer
+    HRP.CFrame = OldCFrame
+    Load.RequestLoad:InvokeServer(-1,game.Players.LocalPlayer)
+    local CoreGui = game:GetService("StarterGui")
+    
+    local bindf = Instance.new("BindableFunction")
+    bindf.OnInvoke = function(buttonText)
+        print("Ready they can now load!")
+    end
+    
+    local Notify = CoreGui:SetCore("SendNotification", {
+        Title = "Donate dupe";
+        Text = "Your mate can now load!";
+        Duration = 5000000000000000000000;
+        Button1 = "Okay!";
+        Callback = bindf
+    })
+    end
+    
+    Donate(2) --- Enter the slot number for the base that you want to donate 
+end)
+
+Section:NewButton("Slot 3", "DONATE DUPE", function()
+    local CoreGui = game:GetService("StarterGui")
+
+        CoreGui:SetCore("SendNotification", {
+            Title = "Donate base";
+            Text = "Please make sure to load infront of the land store to make sure you base saves and dont get wiped!";
+            Duration = 50000000000000000000000;
+            Button1 = "Okay!";
+        })
+    local CoreGui = game:GetService("StarterGui")
+
+        CoreGui:SetCore("SendNotification", {
+            Title = "Donate base";
+            Text = "A notification like this will pop up when then other person can load on your base. Please make sure to whitelist the other person.";
+            Duration = 50000000000000000000000;
+            Button1 = "Okay!";
+        })
+    local CoreGui = game:GetService("StarterGui")
+
+        CoreGui:SetCore("SendNotification", {
+            Title = "Donate base";
+            Text = "This is not our fault if your base gets wiped please dont make tickets about not following our info.";
+            Duration = 50000000000000000000000;
+            Button1 = "Okay!";
+        })
+function Donate(Slot)
+    local EmptyPlot
+    local LocalPlayer = game.Players.LocalPlayer
+    local HRP = LocalPlayer.Character.HumanoidRootPart
+    local OldCFrame
+    local Load = game:GetService("ReplicatedStorage").LoadSaveRequests
+    
+    Load.RequestLoad:InvokeServer(Slot,game.Players.LocalPlayer)
+    repeat wait() until Load.ClientMayLoad:InvokeServer(game.Players.LocalPlayer)
+    OldCFrame = HRP.CFrame
+    for i,v in pairs(game:GetService("Workspace").Properties:GetChildren()) do
+        if v:FindFirstChild("Owner") and tostring(v.Owner.Value) == "nil" then
+        EmptyPlot = v
+    end
+    end
+    
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = EmptyPlot.OriginSquare.CFrame + Vector3.new(0,1,0)
+    game.ReplicatedStorage.Interaction.ClientSetListPlayer:InvokeServer(game:GetService"Players".LocalPlayer.WhitelistFolder, game.Players.LocalPlayer, true)
+    repeat game.ReplicatedStorage.Interaction.ClientIsDragging:FireServer(EmptyPlot) wait() until EmptyPlot.Owner.Value == LocalPlayer
+    HRP.CFrame = OldCFrame
+    Load.RequestLoad:InvokeServer(-1,game.Players.LocalPlayer)
+    local CoreGui = game:GetService("StarterGui")
+    
+    local bindf = Instance.new("BindableFunction")
+    bindf.OnInvoke = function(buttonText)
+        print("Ready they can now load!")
+    end
+    
+    local Notify = CoreGui:SetCore("SendNotification", {
+        Title = "Donate dupe";
+        Text = "Your mate can now load!";
+        Duration = 5000000000000000000000;
+        Button1 = "Okay!";
+        Callback = bindf
+    })
+    end
+    
+    Donate(3) --- Enter the slot number for the base that you want to donate 
+end)
+
+Section:NewButton("Slot 4", "DONATE DUPE", function()
+    local CoreGui = game:GetService("StarterGui")
+
+        CoreGui:SetCore("SendNotification", {
+            Title = "Donate base";
+            Text = "Please make sure to load infront of the land store to make sure you base saves and dont get wiped!";
+            Duration = 50000000000000000000000;
+            Button1 = "Okay!";
+        })
+    local CoreGui = game:GetService("StarterGui")
+
+        CoreGui:SetCore("SendNotification", {
+            Title = "Donate base";
+            Text = "A notification like this will pop up when then other person can load on your base. Please make sure to whitelist the other person.";
+            Duration = 50000000000000000000000;
+            Button1 = "Okay!";
+        })
+    local CoreGui = game:GetService("StarterGui")
+
+        CoreGui:SetCore("SendNotification", {
+            Title = "Donate base";
+            Text = "This is not our fault if your base gets wiped please dont make tickets about not following our info.";
+            Duration = 50000000000000000000000;
+            Button1 = "Okay!";
+        })
+function Donate(Slot)
+    local EmptyPlot
+    local LocalPlayer = game.Players.LocalPlayer
+    local HRP = LocalPlayer.Character.HumanoidRootPart
+    local OldCFrame
+    local Load = game:GetService("ReplicatedStorage").LoadSaveRequests
+    
+    Load.RequestLoad:InvokeServer(Slot,game.Players.LocalPlayer)
+    repeat wait() until Load.ClientMayLoad:InvokeServer(game.Players.LocalPlayer)
+    OldCFrame = HRP.CFrame
+    for i,v in pairs(game:GetService("Workspace").Properties:GetChildren()) do
+        if v:FindFirstChild("Owner") and tostring(v.Owner.Value) == "nil" then
+        EmptyPlot = v
+    end
+    end
+    
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = EmptyPlot.OriginSquare.CFrame + Vector3.new(0,1,0)
+    game.ReplicatedStorage.Interaction.ClientSetListPlayer:InvokeServer(game:GetService"Players".LocalPlayer.WhitelistFolder, game.Players.LocalPlayer, true)
+    repeat game.ReplicatedStorage.Interaction.ClientIsDragging:FireServer(EmptyPlot) wait() until EmptyPlot.Owner.Value == LocalPlayer
+    HRP.CFrame = OldCFrame
+    Load.RequestLoad:InvokeServer(-1,game.Players.LocalPlayer)
+    local CoreGui = game:GetService("StarterGui")
+    
+    local bindf = Instance.new("BindableFunction")
+    bindf.OnInvoke = function(buttonText)
+        print("Ready they can now load!")
+    end
+    
+    local Notify = CoreGui:SetCore("SendNotification", {
+        Title = "Donate dupe";
+        Text = "Your mate can now load!";
+        Duration = 5000000000000000000000;
+        Button1 = "Okay!";
+        Callback = bindf
+    })
+    end
+    
+    Donate(4) --- Enter the slot number for the base that you want to donate 
+end)
+
+Section:NewButton("Slot 5", "DONATE DUPE", function()
+    local CoreGui = game:GetService("StarterGui")
+
+        CoreGui:SetCore("SendNotification", {
+            Title = "Donate base";
+            Text = "Please make sure to load infront of the land store to make sure you base saves and dont get wiped!";
+            Duration = 50000000000000000000000;
+            Button1 = "Okay!";
+        })
+    local CoreGui = game:GetService("StarterGui")
+
+        CoreGui:SetCore("SendNotification", {
+            Title = "Donate base";
+            Text = "A notification like this will pop up when then other person can load on your base. Please make sure to whitelist the other person.";
+            Duration = 50000000000000000000000;
+            Button1 = "Okay!";
+        })
+    local CoreGui = game:GetService("StarterGui")
+
+        CoreGui:SetCore("SendNotification", {
+            Title = "Donate base";
+            Text = "This is not our fault if your base gets wiped please dont make tickets about not following our info.";
+            Duration = 50000000000000000000000;
+            Button1 = "Okay!";
+        })
+function Donate(Slot)
+    local EmptyPlot
+    local LocalPlayer = game.Players.LocalPlayer
+    local HRP = LocalPlayer.Character.HumanoidRootPart
+    local OldCFrame
+    local Load = game:GetService("ReplicatedStorage").LoadSaveRequests
+    
+    Load.RequestLoad:InvokeServer(Slot,game.Players.LocalPlayer)
+    repeat wait() until Load.ClientMayLoad:InvokeServer(game.Players.LocalPlayer)
+    OldCFrame = HRP.CFrame
+    for i,v in pairs(game:GetService("Workspace").Properties:GetChildren()) do
+        if v:FindFirstChild("Owner") and tostring(v.Owner.Value) == "nil" then
+        EmptyPlot = v
+    end
+    end
+    
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = EmptyPlot.OriginSquare.CFrame + Vector3.new(0,1,0)
+    game.ReplicatedStorage.Interaction.ClientSetListPlayer:InvokeServer(game:GetService"Players".LocalPlayer.WhitelistFolder, game.Players.LocalPlayer, true)
+    repeat game.ReplicatedStorage.Interaction.ClientIsDragging:FireServer(EmptyPlot) wait() until EmptyPlot.Owner.Value == LocalPlayer
+    HRP.CFrame = OldCFrame
+    Load.RequestLoad:InvokeServer(-1,game.Players.LocalPlayer)
+    local CoreGui = game:GetService("StarterGui")
+    
+    local bindf = Instance.new("BindableFunction")
+    bindf.OnInvoke = function(buttonText)
+        print("Ready they can now load!")
+    end
+    
+    local Notify = CoreGui:SetCore("SendNotification", {
+        Title = "Donate dupe";
+        Text = "Your mate can now load!";
+        Duration = 5000000000000000000000;
+        Button1 = "Okay!";
+        Callback = bindf
+    })
+    end
+    
+    Donate(5) --- Enter the slot number for the base that you want to donate 
+end)
+
+Section:NewButton("Slot 6", "DONATE DUPE", function()
+    local CoreGui = game:GetService("StarterGui")
+
+        CoreGui:SetCore("SendNotification", {
+            Title = "Donate base";
+            Text = "Please make sure to load infront of the land store to make sure you base saves and dont get wiped!";
+            Duration = 50000000000000000000000;
+            Button1 = "Okay!";
+        })
+    local CoreGui = game:GetService("StarterGui")
+
+        CoreGui:SetCore("SendNotification", {
+            Title = "Donate base";
+            Text = "A notification like this will pop up when then other person can load on your base. Please make sure to whitelist the other person.";
+            Duration = 50000000000000000000000;
+            Button1 = "Okay!";
+        })
+    local CoreGui = game:GetService("StarterGui")
+
+        CoreGui:SetCore("SendNotification", {
+            Title = "Donate base";
+            Text = "This is not our fault if your base gets wiped please dont make tickets about not following our info.";
+            Duration = 50000000000000000000000;
+            Button1 = "Okay!";
+        })
+function Donate(Slot)
+    local EmptyPlot
+    local LocalPlayer = game.Players.LocalPlayer
+    local HRP = LocalPlayer.Character.HumanoidRootPart
+    local OldCFrame
+    local Load = game:GetService("ReplicatedStorage").LoadSaveRequests
+    
+    Load.RequestLoad:InvokeServer(Slot,game.Players.LocalPlayer)
+    repeat wait() until Load.ClientMayLoad:InvokeServer(game.Players.LocalPlayer)
+    OldCFrame = HRP.CFrame
+    for i,v in pairs(game:GetService("Workspace").Properties:GetChildren()) do
+        if v:FindFirstChild("Owner") and tostring(v.Owner.Value) == "nil" then
+        EmptyPlot = v
+    end
+    end
+    
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = EmptyPlot.OriginSquare.CFrame + Vector3.new(0,1,0)
+    game.ReplicatedStorage.Interaction.ClientSetListPlayer:InvokeServer(game:GetService"Players".LocalPlayer.WhitelistFolder, game.Players.LocalPlayer, true)
+    repeat game.ReplicatedStorage.Interaction.ClientIsDragging:FireServer(EmptyPlot) wait() until EmptyPlot.Owner.Value == LocalPlayer
+    HRP.CFrame = OldCFrame
+    Load.RequestLoad:InvokeServer(-1,game.Players.LocalPlayer)
+    local CoreGui = game:GetService("StarterGui")
+    
+    local bindf = Instance.new("BindableFunction")
+    bindf.OnInvoke = function(buttonText)
+        print("Ready they can now load!")
+    end
+    
+    local Notify = CoreGui:SetCore("SendNotification", {
+        Title = "Donate dupe";
+        Text = "Your mate can now load!";
+        Duration = 5000000000000000000000;
+        Button1 = "Okay!";
+        Callback = bindf
+    })
+    end
+    
+    Donate(6) --- Enter the slot number for the base that you want to donate 
+end)
+
+--clear plot
+local Section = Tab:NewSection("Clear plot")
+Section:NewToggle("Clear Axes", "Clear Axes", function(value)
+local x = game.Workspace.PlayerModels
+local c = game:GetService("ReplicatedStorage").Interaction.DestroyStructure 
+for i,v in pairs(x:GetChildren()) do 
+if v:FindFirstChild("Owner") then
+if v:FindFirstChild("Type") and v.Owner.Value == game.Players.LocalPlayer then
+if v.Type.Value == "Tool" then
+local removing  = v
+local Event = c
+Event:FireServer(removing)
+print("Removing ... blueprint") 
+else
+print("nothing been found")
+end
+end
+end
+end
+end)
+
+Section:NewToggle("Clear Gifts", "Clear Gifts", function(state)
+local x = game.Workspace.PlayerModels
+local c = game:GetService("ReplicatedStorage").Interaction.DestroyStructure 
+for i,v in pairs(x:GetChildren()) do 
+if v:FindFirstChild("Owner") then
+if v:FindFirstChild("Type") and v.Owner.Value == game.Players.LocalPlayer then
+if v.Type.Value == "Gift" then
+local removing  = v
+local Event = c
+Event:FireServer(removing)
+print("Removing ... blueprint") 
+else
+print("nothing been found")
+end
+end
+end
+end
+end)
+
+Section:NewToggle("Clear Loose Items", "Clear Loose Items", function(state)
+local x = game.Workspace.PlayerModels
+local c = game:GetService("ReplicatedStorage").Interaction.DestroyStructure 
+for i,v in pairs(x:GetChildren()) do 
+if v:FindFirstChild("Owner") then
+if v:FindFirstChild("Type") and v.Owner.Value == game.Players.LocalPlayer then
+if v.Type.Value == "Looseitem" then
+local removing  = v
+local Event = c
+Event:FireServer(removing)
+print("Removing ... blueprint") 
+else
+print("nothing been found")
+end
+end
+end
+end
+end)
+
+Section:NewToggle("Clear Planks", "Clear Planks", function(state)
+local x = game.Workspace.PlayerModels
+local c = game:GetService("ReplicatedStorage").Interaction.DestroyStructure 
+for i,v in pairs(x:GetChildren()) do 
+if v:FindFirstChild("Owner") then
+if v:FindFirstChild("Type") and v.Owner.Value == game.Players.LocalPlayer then
+if v.Type.Value == "TreeClass" then
+local removing  = v
+local Event = c
+Event:FireServer(removing)
+print("Removing ... blueprint") 
+else
+print("nothing been found")
+end
+end
+end
+end
+end)
+
+Section:NewToggle("Clear Structures", "Clear Structures", function(state)
+local x = game.Workspace.PlayerModels
+local c = game:GetService("ReplicatedStorage").Interaction.DestroyStructure 
+for i,v in pairs(x:GetChildren()) do 
+if v:FindFirstChild("Owner") then
+if v:FindFirstChild("Type") and v.Owner.Value == game.Players.LocalPlayer then
+if v.Type.Value == "Structures" then
+local removing  = v
+local Event = c
+Event:FireServer(removing)
+print("Removing ... blueprint") 
+else
+print("nothing been found")
+end
+end
+end
+end
+end)
+
+Section:NewToggle("Clear Blueprints", "Clear Blueprints", function(state)
+local x = game.Workspace.PlayerModels
+local c = game:GetService("ReplicatedStorage").Interaction.DestroyStructure 
+for i,v in pairs(x:GetChildren()) do 
+if v:FindFirstChild("Owner") then
+if v:FindFirstChild("Type") and v.Owner.Value == game.Players.LocalPlayer then
+if v.Type.Value == "Blueprint" then
+local removing  = v
+local Event = c
+Event:FireServer(removing)
+print("Removing ... blueprint") 
+else
+print("nothing been found")
+end
+end
+end
+end
+end)
+
+Section:NewToggle("Clear Furniture", "Clear Furniture", function(state)
+local x = game.Workspace.PlayerModels
+local c = game:GetService("ReplicatedStorage").Interaction.DestroyStructure 
+for i,v in pairs(x:GetChildren()) do 
+if v:FindFirstChild("Owner") then
+if v:FindFirstChild("Type") and v.Owner.Value == game.Players.LocalPlayer then
+if v.Type.Value == "Furniture" then
+local removing  = v
+local Event = c
+Event:FireServer(removing)
+print("Removing ... blueprint") 
+else
+print("nothing been found")
+end
+end
+end
+end
+end)
+
+Section:NewToggle("Clear Wire", "Clear Wire", function(state)
+local x = game.Workspace.PlayerModels
+local c = game:GetService("ReplicatedStorage").Interaction.DestroyStructure 
+for i,v in pairs(x:GetChildren()) do 
+if v:FindFirstChild("Owner") then
+if v:FindFirstChild("Type") and v.Owner.Value == game.Players.LocalPlayer then
+if v.Type.Value == "Wire" then
+local removing  = v
+local Event = c
+Event:FireServer(removing)
+print("Removing ... blueprint") 
+else
+print("nothing been found")
+end
+end
+end
+end
+end)
+
+local Tab = Window:NewTab("Box sort / Base drop")
+local Section = Tab:NewSection("Box sorter")
+--box sort
+Section:NewDropdown("Items", "Items", {"BasicHatchet","Axe1","Axe2","Axe3","SilverAxe","ManyAxe","Rukiryaxe","Wire","NeonWireOrange","NeonWireRed","NeonWireViolet","NeonWireWhite","NeonWireYellow","NeonWireBlue","NeonWireCyan","NeonWireGreen","IcicleWireBlue","IcicleWireAmber","IcicleWireRed","IcicleWireGreen","IcicleWireHalloween","LightBulb","BagOfSand","CanOfWorms","Dynamite","Sawmill","Sawmill2","Sawmill3","Sawmill4","Sawmill4L","UtilityTruck","WorkLight","SmallTrailer","Pickup1","UtilityTruck2","Trailer2","Painting1","Painting2","Painting3","Painting6","Painting7","Painting8","Painting9","ChopSaw","Button0","Lever0","Laser","LaserReceiver","Hatch","SignalDelay","SignalSustain","WoodChecker","GateNOT","GateXOR","GateAND","GateOR","ClockSwitch","PressurePlate","ConveyorSwitch","StraightSwitchConveyorLeft","StraightSwitchConveyorRight","ConveyorSupports","StraightConveyor","TightTurnConveyorSupports","TightTurnConveyor","ConveyorFunnel","TiltConveyor","LogSweeper","Seat_Armchair","Dishwasher","Refridgerator","Stove","Toilet","Seat_Couch","Seat_Loveseat","FloorLamp1","Lamp1","GlassPane1","GlassPane2","GlassPane3","GlassPane4","GlassDoor1","FireworkLauncher","Bed1","Bed2","WallLight1","WallLight2"}, function(CA)
+     imcool = CA     
+end)
+
+Section:NewSlider("Height Of Item", "Height Of Item", 50, 1, function(CA)
+	height = CA	
+end)
+
+Section:NewSlider("Lengh Of Item", "Lengh Of Item", 50, 1, function(CA)
+	lengh = CA	
+end)
+
+Section:NewButton("Start Box Sort", "Start Box Sort", function()
+function MakePart(Pos, Size)
+            local Part = Instance.new("Part", workspace)
+            Part.Anchored = true
+            Part.Size = Size
+            Part.Position = Pos + game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+            Part.Color = Color3.fromRGB(Pos.X, Pos.Y, Pos.Z)
+            Part.CanCollide = false
+        end
+
+local Player = game.Players.LocalPlayer
+local XSort, ZSort = lengh, height
+
+function SortItems(ItemName)
+    local AllItems = {}
+    for i,v in pairs(workspace.PlayerModels:GetChildren()) do
+        if v:FindFirstChild("Owner") and v:FindFirstChild("PurchasedBoxItemName") then
+            if v.Owner.Value == Player and v.PurchasedBoxItemName.Value == ItemName then
+                table.insert(AllItems, v)
+            end
+        end
+    end
+    
+    local PartSize = AllItems[1].Main.Size
+    local Numbers = 0
+    local Me = game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(0,3.5,0)
+    
+    wait(3)
+    
+    for Y = 1, math.ceil(#AllItems / (XSort * ZSort)) do
+        for X = 1, XSort do
+            for Z = 1, ZSort do
+                if Numbers < #AllItems then
+                    Numbers = Numbers + 1
+                    Args = {nil, CFrame.new(X * PartSize.X, Y * PartSize.Y, Z * PartSize.Z) + Me, Player, nil, AllItems[Numbers], true}
+                    game:GetService("ReplicatedStorage").PlaceStructure.ClientPlacedStructure:FireServer(unpack(Args))
+                else
+                    print('Done!')
+                    break
+                end
+            end
+        end
+    end
+end
+SortItems(imcool)  
+end)
+
+
+--tp items
+
+local Section = Tab:NewSection("Item Teleport")
+Section:NewToggle("Axes", "Axes", function(value)
+if value then
+local TypeName = "Tool"
+for i,v in pairs(game:GetService("Workspace").PlayerModels:GetChildren()) do
+    if v:FindFirstChild("Type") and tostring(v.Type.Value) == TypeName then
+    local Plr = game:GetService("Players").LocalPlayer
+    local Mouse = Plr:GetMouse()
+    local selection = Instance.new("SelectionBox")
+    selection.Color3 = Color3.new(95,95,95)
+    selection.Parent = v.Type.Parent
+    selection.Adornee = selection.Parent
+    else 
+end
+end
+else
+  for i,v in pairs(game.Workspace.PlayerModels:GetDescendants()) do
+    if v.Name == "SelectionBox" then
+    v:Destroy()
+end
+end
+end
+end)
+
+Section:NewToggle("Gifts", "Gifts", function(value)
+if value then
+local TypeName = "Gift"
+for i,v in pairs(game:GetService("Workspace").PlayerModels:GetChildren()) do
+    if v:FindFirstChild("Type") and tostring(v.Type.Value) == TypeName then
+    local Plr = game:GetService("Players").LocalPlayer
+    local Mouse = Plr:GetMouse()
+    local selection = Instance.new("SelectionBox")
+    selection.Color3 = Color3.new(95,95,95)
+    selection.Parent = v.Type.Parent
+    selection.Adornee = selection.Parent
+    else 
+end
+end
+else
+  for i,v in pairs(game.Workspace.PlayerModels:GetDescendants()) do
+    if v.Name == "SelectionBox" then
+    v:Destroy()
+end
+end
+end
+end)
+
+Section:NewToggle("Loose Items", "Loose Items", function(value)
+if value then
+local TypeName = "Loose Item"
+for i,v in pairs(game:GetService("Workspace").PlayerModels:GetChildren()) do
+    if v:FindFirstChild("Type") and tostring(v.Type.Value) == TypeName then
+    local Plr = game:GetService("Players").LocalPlayer
+    local Mouse = Plr:GetMouse()
+    local selection = Instance.new("SelectionBox")
+    selection.Color3 = Color3.new(95,95,95)
+    selection.Parent = v.Type.Parent
+    selection.Adornee = selection.Parent
+    else 
+end
+end
+else
+  for i,v in pairs(game.Workspace.PlayerModels:GetDescendants()) do
+    if v.Name == "SelectionBox" then
+    v:Destroy()
+end
+end
+end
+end)
+
+Section:NewButton("Teleport Selected Item", "Teleport Selected Item", function()
+local imcoolimcoolimcoolimcoolimcoolimcoolimcoolimcoolimcoolimcoolimcoolimcoolimcool = ""
+function round(num, numDecimalPlaces)
+local mult = 10^(numDecimalPlaces or 0)
+return math.floor(num * mult + 0.5) / mult
+end
+CordX = round(game.Players.LocalPlayer.Character.HumanoidRootPart.Position.x, 1)
+CordY = round(game.Players.LocalPlayer.Character.HumanoidRootPart.Position.y, 1)
+CordZ = round(game.Players.LocalPlayer.Character.HumanoidRootPart.Position.z, 1)
+for i,v in pairs(game.Workspace.PlayerModels:GetChildren()) do
+if v:FindFirstChild("Owner") and v.Owner.Value == game.Players.LocalPlayer then
+if v:FindFirstChild("SelectionBox") then
+if v.Main ~= nil then
+Item = v.Main
+elseif v.WoodSection == nil then
+Item = v.WoodSection
+end
+if imcoolimcoolimcoolimcoolimcoolimcoolimcoolimcoolimcoolimcoolimcoolimcoolimcool then
+wait()
+game:GetService("ReplicatedStorage").PlaceStructure.ClientPlacedStructure:FireServer(nil, CFrame.new(CordX, CordY, CordZ), game:GetService("Players").LocalPlayer, nil, Item.Parent, true)
+end
+end
+end
+end
+
+end)
+
+
+--tps
+
+local Tab = Window:NewTab("Teleports")
+local Section = Tab:NewSection("Tps")
+
+Section:NewButton("Teleport To Plot", "Teleport To Plot", function()
+local te = game.Workspace.Properties
+for i,v in pairs(te:GetChildren()) do
+if v.Owner.Value == game.Players.LocalPlayer then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.OriginSquare.CFrame
+end
+end	    
+end)
+
+Section:NewButton("Spawn", "Spawn tp", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(155, 3, 45)
+end)
+Section:NewButton("Wood rus", "Wood rus tp", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(259, 3, 58)
+end)
+Section:NewButton("Land Store", "Land Store tp", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(266, 3, -100)
+end)
+Section:NewButton("Yellow Wood", "Yellow Wood tp", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1113, -6, -979)
+end)
+Section:NewButton("Links Logic", "Links Logic tp", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(4607, 9, -798)
+end)
+Section:NewButton("Cave", "Cave tp", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(3581, -177, 430)
+end)
+Section:NewButton("Volcano", "Volcano tp", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1585, 625, 1140)
+end)
+Section:NewButton("Swamp", "Swamp tp", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1209, 138, -801)
+end)
+Section:NewButton("Palm Island", "Palm Island tp", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2549, 5, -42)
+end)
+Section:NewButton("Fancy Furnishings", "Fancy Furnishings tp", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(491, 13, -1720)
+end)
+Section:NewButton("Boxed Cars", "Boxed Cars tp", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(509, 5.2, -1463)
+end)
+Section:NewButton("Bobs Shack", "Bobs Shack tp", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(260, 10, -2542)
+end)
+Section:NewButton("Shrine Of Sight", "Shrine Of Sight tp", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1600, 205, 919)
+end)
+Section:NewButton("Ski Lodge", "Ski Lodge tp", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1244, 66, 2306)
+end)
+Section:NewButton("Fine Arts Shop", "Fine Arts Shop tp", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(5207, -156, 719)
+end)
+Section:NewButton("End Times", "End Times tp", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(113, -204, -951)
+end)
+Section:NewButton("Dock", "Dock tp", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1114, 3.2, -197)
+end)
+Section:NewButton("Bridge", "Bridge tp", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(113, 15, -977)
+end)
+Section:NewButton("Strange Man", "Strange Man tp", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1061, 20, 1131)
+end)
+
+local Tab = Window:NewTab("Settings")
+local Section = Tab:NewSection("Gui")
+Section:NewKeybind("Toggle gui", "Toggle gui", Enum.KeyCode.RightAlt, function()
+	Library:ToggleUI()
+end)
+local Section = Tab:NewSection("Anti afk")
+Section:NewButton("Enable anti afk", "Enables anti afk", function()
+    loadstring(game:HttpGet"https://raw.githubusercontent.com/m6s4/main/main/anti%20afk")()
+end)
+
+local Section = Tab:NewSection("Credits")
+Section:NewLabel("Developer: S409™#0001")
+Section:NewLabel("Beta tester: Aura Fox#7182")
+
+local Section = Tab:NewSection("Support")
+local Section = Tab:NewSection("Discord Link")
+local Section = Tab:NewSection("https://discord.gg/aTVwJPQFfR")
+
+Section:NewButton("Copy Discord Link", "Copys Discord Link", function()
+	setclipboard("https://discord.gg/aTVwJPQFfR")
+end)
