@@ -4,6 +4,5 @@ local CoreGui = game:GetService("StarterGui")
             Title = "Admin panel";
             Text = "Script isnt out yet :(";
             Duration = 5;
-            Button1 = "Yes";
-            Button2 = "No";
+            Button1 = "Ok :(";
         })
