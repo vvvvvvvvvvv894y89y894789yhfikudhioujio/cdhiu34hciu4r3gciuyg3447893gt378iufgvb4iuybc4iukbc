@@ -1,7 +1,7 @@
 local lib = {}
 
 pcall(function()
-    game.CoreGui.S409 hub - V1.0 - Beta:Destroy();
+    game.CoreGui.Ancestor:Destroy();
 end)
 function lib:Create(type, proprieties)
 	local instance = Instance.new(type)
@@ -25,7 +25,7 @@ function lib:Main()
 	local firstC = true
 
 	main.ScreenGui = lib:Create("ScreenGui", {
-		Name = "S409 hub - V1.0 - Beta",
+		Name = "S409 hub",
 		ResetOnSpawn = false,
 	})
 
@@ -131,7 +131,7 @@ function lib:Main()
 		Position = UDim2.new(0.0331138819, 0, 0.125, 0),
 		Size = UDim2.new(0, 87, 0, 30),
 		Font = Enum.Font.GothamBold,
-		Text = "S409 hub - V1.0 - Beta",
+		Text = "S409 hub",
 		TextColor3 = Color3.fromRGB(255, 255, 255),
 		TextSize = 27.000,
 	})
@@ -815,7 +815,7 @@ function lib:Main()
 				end);
 
                 connections[#connections+1]=game.CoreGui.ChildRemoved:Connect(function(Child)
-                    if tostring(Child)=='S409 hub - V1.0 - Beta'then
+                    if tostring(Child)=='Ancestor'then
                         for _,Connection in next,connections do 
                             Connection:Disconnect();
                         end;
@@ -1533,7 +1533,7 @@ function lib:Main()
 	end
 
 	main.Close.MouseButton1Click:Connect(function()
-		game.CoreGui.S409 hub - V1.0 - Beta:Destroy()
+		game.CoreGui.Ancestor:Destroy()
 	end)
 
 	main.ScreenGui.Parent = game.CoreGui
